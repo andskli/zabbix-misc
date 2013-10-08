@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # Forced to use ugly/dumb json formatting
+#
+# Author: Andreas Skarmutsos Lindh <andreas.skarmutsoslindh@gmail.com>
+#
 
 fh = open("/proc/diskstats","r")
 
