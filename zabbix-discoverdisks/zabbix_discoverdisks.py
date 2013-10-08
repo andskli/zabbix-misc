@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-# Forced to use ugly/dumb json formatting
+#
+# Forced to use ugly/dumb json formatting due to the lack of newer
+# python version and/or python json module.
 #
 # Author: Andreas Skarmutsos Lindh <andreas.skarmutsoslindh@gmail.com>
 #
