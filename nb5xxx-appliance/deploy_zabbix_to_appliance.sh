@@ -4,8 +4,7 @@
 # with minimal third party requirements, to be called as described below:
 #   wget -O - http://${MASTER}/deploy/deploy_zabbix_to_appliance.sh | sh -
 #
-#
-# Author: Andreas Skarmutsos Lindh <andreas.skarmutsoslindh@gmail.com>
+# Author: Andreas Skarmutsos Lindh <andreas@superblock.se>
 #
 
 MASTER=XXX.IP
@@ -36,7 +35,7 @@ chmod +x /usr/local/bin/zabbix_discoverdisks.py
 # Setup zabbix_agent.conf
 cat > /etc/zabbix/zabbix_agent.conf <<EOF
 Server=${MASTER}
-### DISK I/O###
+### DISK I/O ###
 UserParameter=custom.vfs.dev.disks,/usr/local/bin/zabbix_discoverdisks.py
 UserParameter=custom.vfs.dev.read.ops[*],cat /proc/diskstats | egrep \$1 | head -1 | awk '{print \$\$4}'
 UserParameter=custom.vfs.dev.read.ms[*],cat /proc/diskstats | egrep \$1 | head -1 | awk '{print \$\$7}'
@@ -46,7 +45,7 @@ UserParameter=custom.vfs.dev.io.active[*],cat /proc/diskstats | egrep \$1 | head
 UserParameter=custom.vfs.dev.io.ms[*],cat /proc/diskstats | egrep \$1 | head -1 | awk '{print \$\$13}'
 #UserParameter=custom.vfs.dev.read.sectors[*],cat /proc/diskstats | egrep \$1 | head -1 | awk '{print \$6}'
 #UserParameter=custom.vfs.dev.write.sectors[*],cat /proc/diskstats | egrep \$1 | head -1 | awk '{print \$10}'
-### DISK I/O###
+### DISK I/O ###
 EOF
 
 # Setup daily redeploy of self from cron
@@ -61,6 +60,7 @@ if ! grep -q "zabbix_agentd" /etc/rc.d/rc.local; then
     echo "/usr/local/bin/zabbix_agentd -c /etc/zabbix/zabbix_agent.conf" >> /etc/rc.d/rc.local
 fi
 
+# 5020 specific?
 if test -f /etc/puredisk/custom_iptables_rules; then
     if ! grep -q "10050" /etc/puredisk/custom_iptables_rules; then
         echo -e "tcp 0.0.0.0/0 10050" >> /etc/puredisk/custom_iptables_rules
